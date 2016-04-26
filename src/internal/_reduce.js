@@ -1,7 +1,7 @@
+var _symIterator = require('./internal/_symIterator');
 var _xwrap = require('./_xwrap');
 var bind = require('../bind');
 var isArrayLike = require('../isArrayLike');
-
 
 module.exports = (function() {
   function _arrayReduce(xf, acc, list) {
@@ -35,7 +35,6 @@ module.exports = (function() {
     return xf['@@transducer/result'](obj.reduce(bind(xf['@@transducer/step'], xf), acc));
   }
 
-  var symIterator = (typeof Symbol !== 'undefined') ? Symbol.iterator : '@@iterator';
   return function _reduce(fn, acc, list) {
     if (typeof fn === 'function') {
       fn = _xwrap(fn);
@@ -46,8 +45,8 @@ module.exports = (function() {
     if (typeof list.reduce === 'function') {
       return _methodReduce(fn, acc, list);
     }
-    if (list[symIterator] != null) {
-      return _iterableReduce(fn, acc, list[symIterator]());
+    if (list[_symIterator] != null) {
+      return _iterableReduce(fn, acc, list[_symIterator]());
     }
     if (typeof list.next === 'function') {
       return _iterableReduce(fn, acc, list);
